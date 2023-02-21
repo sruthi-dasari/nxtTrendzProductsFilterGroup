@@ -56,6 +56,10 @@
   border: none;
   padding: 0px;
   margin-bottom: 10px;
+}
+
+.category-name {
+  margin: 0px;
   color: #64748b;
   font-size: 18px;
   font-family: 'Roboto';
@@ -73,8 +77,11 @@
   font-weight: 600;
 }
 
-.rating-container {
-  background: transparent;
+.rating-btn {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
 }
 
 .rating-img {
@@ -84,6 +91,9 @@
 
 .rating-extra-text {
   color: #475569;
+  font-family: 'Roboto';
+  font-size: 17px;
+  margin-left: 5px;
 }
 
 .clear-filters-btn {

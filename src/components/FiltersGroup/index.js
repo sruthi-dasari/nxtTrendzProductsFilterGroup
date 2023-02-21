@@ -2,38 +2,62 @@ import './index.css'
 import {BsSearch} from 'react-icons/bs'
 
 const FiltersGroup = props => {
-  const {ratingsList, categoryOptions} = props
+  const {
+    ratingsList,
+    categoryOptions,
+    updateRating,
+    updateCategory,
+    updateTitleSearch,
+    resetFilters,
+  } = props
+
+  const onEnter = event => {
+    if (event.key === 'Enter') {
+      const searchedKey = event.target.value
+      updateTitleSearch(searchedKey)
+    }
+  }
+
+  const onClickClear = () => {
+    resetFilters()
+  }
 
   return (
     <div className="filters-group-container">
       <div className="search-box-container">
-        <input type="search" className="search-box" placeholder="Search" />
+        <input
+          type="search"
+          className="search-box"
+          placeholder="Search"
+          onKeyPress={onEnter}
+        />
         <BsSearch className="search-icon" />
       </div>
       <div className="category-container">
-        <p className="category-heading">Category</p>
-        <button className="category-option-btn" type="button">
-          Clothing
-        </button>
-        <button className="category-option-btn" type="button">
-          Electronics
-        </button>
-        <button className="category-option-btn" type="button">
-          Appliances
-        </button>
-        <button className="category-option-btn" type="button">
-          Grocery
-        </button>
-        <button className="category-option-btn" type="button">
-          Toys
-        </button>
-      </div>
-      <div className="ratings-container">
-        <p className="rating-heading">Rating</p>
-        {ratingsList.map(eachItem => (
-          <Rating ratingDetails={eachItem} />
+        <h1 className="category-heading">Category</h1>
+        {categoryOptions.map(eachItem => (
+          <Category
+            categoryDetails={eachItem}
+            key={eachItem.categoryId}
+            updateCategory={updateCategory}
+          />
         ))}
-        <button className="clear-filters-btn" type="button">
+      </div>
+
+      <div className="ratings-container">
+        <h1 className="rating-heading">Rating</h1>
+        {ratingsList.map(eachItem => (
+          <Rating
+            ratingDetails={eachItem}
+            key={eachItem.ratingId}
+            updateRating={updateRating}
+          />
+        ))}
+        <button
+          className="clear-filters-btn"
+          type="button"
+          onClick={onClickClear}
+        >
           Clear Filters
         </button>
       </div>
@@ -41,15 +65,39 @@ const FiltersGroup = props => {
   )
 }
 
-const Rating = props => {
-  const {ratingDetails} = props
-  const {ratingId, imageUrl} = ratingDetails
+const Category = props => {
+  const {categoryDetails, updateCategory} = props
+  const {name, categoryId} = categoryDetails
+
+  const onClickCategory = () => {
+    updateCategory(categoryId)
+  }
 
   return (
-    <div className="rating-container">
+    <button
+      className="category-option-btn"
+      type="button"
+      onClick={onClickCategory}
+    >
+      <p className="category-name">{name}</p>
+    </button>
+  )
+}
+
+const Rating = props => {
+  const {ratingDetails, updateRating} = props
+  const {ratingId, imageUrl} = ratingDetails
+
+  const onClickRating = () => {
+    console.log('In onClickRating()')
+    updateRating(ratingId)
+  }
+
+  return (
+    <button type="button" className="rating-btn" onClick={onClickRating}>
       <img src={imageUrl} alt={`rating ${ratingId}`} className="rating-img" />
       <p className="rating-extra-text">& up</p>
-    </div>
+    </button>
   )
 }
 

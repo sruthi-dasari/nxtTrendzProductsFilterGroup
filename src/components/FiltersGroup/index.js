@@ -11,9 +11,14 @@ const FiltersGroup = props => {
     resetFilters,
   } = props
 
+  let searchedKey = ''
+
+  const onChangeSearchInput = event => {
+    searchedKey = event.target.value
+  }
+
   const onEnter = event => {
     if (event.key === 'Enter') {
-      const searchedKey = event.target.value
       updateTitleSearch(searchedKey)
     }
   }
@@ -29,6 +34,8 @@ const FiltersGroup = props => {
           type="search"
           className="search-box"
           placeholder="Search"
+          value={searchedKey}
+          onChange={onChangeSearchInput}
           onKeyPress={onEnter}
         />
         <BsSearch className="search-icon" />

@@ -72,18 +72,15 @@ const apiStatusConstants = {
   loading: 'LOADING',
 }
 
-const initialState = {
-  productsList: [],
-  isLoading: false,
-  apiStatus: apiStatusConstants.initial,
-  activeOptionId: sortbyOptions[0].optionId,
-  selectedRating: '',
-  selectedCategory: '',
-  searchedTitle: '',
-}
-
 class AllProductsSection extends Component {
-  state = initialState
+  state = {
+    productsList: [],
+    apiStatus: apiStatusConstants.initial,
+    activeOptionId: sortbyOptions[0].optionId,
+    selectedRating: '',
+    selectedCategory: '',
+    searchedTitle: '',
+  }
 
   componentDidMount() {
     this.getProducts()
@@ -137,7 +134,11 @@ class AllProductsSection extends Component {
   }
 
   updateTitleSearch = searchedKey => {
-    this.setState({searchedTitle: searchedKey}, this.getProducts)
+    this.setState({searchedTitle: searchedKey})
+  }
+
+  enterSearchInput = () => {
+    this.getProducts()
   }
 
   updateRating = ratingId => {
@@ -145,7 +146,14 @@ class AllProductsSection extends Component {
   }
 
   resetFilters = () => {
-    this.setState(initialState, this.getProducts)
+    this.setState(
+      {
+        selectedRating: '',
+        selectedCategory: '',
+        searchedTitle: '',
+      },
+      this.getProducts,
+    )
   }
 
   renderNoProductsView = () => (
@@ -163,7 +171,7 @@ class AllProductsSection extends Component {
   )
 
   renderProductsList = () => {
-    console.log('renderProductsList()')
+    // console.log('renderProductsList()')
     const {productsList, activeOptionId} = this.state
 
     // TODO: Add No Products View
@@ -224,6 +232,7 @@ class AllProductsSection extends Component {
   }
 
   render() {
+    const {searchedTitle} = this.state
     return (
       <div className="all-products-section">
         {/* TODO: Update the below element */}
@@ -234,6 +243,7 @@ class AllProductsSection extends Component {
           updateCategory={this.updateCategory}
           updateTitleSearch={this.updateTitleSearch}
           resetFilters={this.resetFilters}
+          searchedTitle={searchedTitle}
         />
         {this.renderViewContainer()}
       </div>

@@ -244,6 +244,7 @@ class AllProductsSection extends Component {
           updateTitleSearch={this.updateTitleSearch}
           resetFilters={this.resetFilters}
           searchedTitle={searchedTitle}
+          enterSearchInput={this.enterSearchInput}
         />
         {this.renderViewContainer()}
       </div>
